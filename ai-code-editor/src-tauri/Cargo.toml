@@ -1,0 +1,22 @@
+[package]
+name = "ai-code-editor"
+version = "0.1.0"
+description = "AI-powered code editor with Ollama integration"
+authors = ["you"]
+license = ""
+repository = ""
+edition = "2021"
+
+[build-dependencies]
+tauri-build = { version = "1.5.1", features = [] }
+
+[dependencies]
+tauri = { version = "1.6.1", features = [ "dialog-open", "fs-remove-file", "dialog-save", "path-all", "fs-write-file", "fs-exists", "fs-create-dir", "fs-read-dir", "fs-read-file", "fs-rename-file", "http-request", "fs-copy-file", "fs-remove-dir", "shell-execute", "shell-sidecar", "shell-open"] }
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+tokio = { version = "1", features = ["full"] }
+reqwest = { version = "0.11", features = ["json"] }
+
+[features]
+default = ["custom-protocol"]
+custom-protocol = ["tauri/custom-protocol"]
