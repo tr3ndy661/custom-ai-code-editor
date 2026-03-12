@@ -1,7 +1,8 @@
-import React, { useRef, useEffect, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import Editor, { OnMount } from '@monaco-editor/react';
-import * as monaco from 'monaco-editor';
 import { OllamaService } from '../services/OllamaService';
+
+type Monaco = typeof import('monaco-editor');
 
 interface MonacoEditorProps {
   value: string;
@@ -20,7 +21,7 @@ const MonacoEditor: React.FC<MonacoEditorProps> = ({
   const [isAutoCompleting, setIsAutoCompleting] = useState(false);
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
 
-  const handleEditorDidMount: OnMount = (editor, monaco) => {
+  const handleEditorDidMount: OnMount = (editor, monacoInstance) => {
     editorRef.current = editor;
     
     // Configure editor options
@@ -37,10 +38,10 @@ const MonacoEditor: React.FC<MonacoEditorProps> = ({
     });
 
     // Set up AI autocomplete
-    setupAutoComplete(editor, monaco);
+    setupAutoComplete(editor, monacoInstance);
   };
 
-  const setupAutoComplete = (editor: monaco.editor.IStandaloneCodeEditor, monaco: any) => {
+  const setupAutoComplete = (editor: any, monaco: any) => {
     let ghostTextWidget: any = null;
 
     const showGhostText = (text: string, position: monaco.Position) => {
